@@ -1,11 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from a_nice_mc.objectives import Energy
-from a_nice_mc.utils.evaluation import batch_effective_sample_size as effective_sample_size
-from a_nice_mc.utils.evaluation import acceptance_rate
-from a_nice_mc.utils.logger import save_ess, create_logger
-
-logger = create_logger(__name__)
+from objectives import Energy
 
 
 class BayesianLogisticRegression(Energy):
@@ -76,14 +71,8 @@ class BayesianLogisticRegression(Energy):
         v = np.std(z_, axis=0, dtype=np.float64)
         print('mean: {}'.format(m))
         print('std: {}'.format(v))
-        logger.info('Acceptance rate %.4f' % (acceptance_rate(z)))
-        ess = effective_sample_size(
-            z,
-            self.mean(), self.std() * self.std(),
-            logger=logger
-        )
-        if path:
-            save_ess(ess, path)
+
+
 
     @staticmethod
     def mean():
